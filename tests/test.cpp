@@ -1,8 +1,8 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "ThreadPool.h"
-#include "Thread.h"
+#include "src/ThreadPool.h"
+#include "src/Thread.h"
 
 void *process(void *arg) {
 	printf("thread %s working on task%d\n ", Thread::GetName().c_str(), *((int*) arg));

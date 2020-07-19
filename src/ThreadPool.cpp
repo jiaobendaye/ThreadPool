@@ -19,7 +19,7 @@ ThreadPool::ThreadPool(size_t minNum, size_t maxNum, size_t queueSize)
 {
   m_workers.reserve(minNum + (maxNum - minNum) / 2 );
 
-  for (int i=0; i<m_minNum; ++i)
+  for (size_t i=0; i<m_minNum; ++i)
   {
     Thread::ptr thr(new Thread([this](){worker_thread();}, "worker_"+std::to_string(m_workerId)));
     ++m_workerId;
