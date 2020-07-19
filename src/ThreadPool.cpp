@@ -21,7 +21,8 @@ ThreadPool::ThreadPool(size_t minNum, size_t maxNum, size_t queueSize)
 
   for (size_t i=0; i<m_minNum; ++i)
   {
-    Thread::ptr thr(new Thread([this](){worker_thread();}, "worker_"+std::to_string(m_workerId)));
+    Thread::ptr thr(new Thread([this](){worker_thread();}, 
+        "worker_"+std::to_string(m_workerId)));
     ++m_workerId;
     m_workers.push_back(thr);
   }
@@ -205,7 +206,6 @@ bool ThreadPool::threadpool_add(void*(*function)(void *arg), void *arg)
       m_mutex.lock();
       if(m_taskQueue.size() < m_maxQueSize)
       {
-        m_taskQueue.push(task);
         break;
       }
       else
@@ -215,10 +215,10 @@ bool ThreadPool::threadpool_add(void*(*function)(void *arg), void *arg)
     }
     else
     {
-      m_taskQueue.push(task);
       break;
     }
   }
+  m_taskQueue.push(task);
   m_CSemaNotEmpty.notify();
   m_mutex.unlock();
 

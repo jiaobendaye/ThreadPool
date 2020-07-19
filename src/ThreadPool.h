@@ -55,7 +55,7 @@ private:
 	size_t m_minNum = 0;					//工作线程最小容量
 	size_t m_maxNum = 0;					//工作线程最大容量
 	size_t m_busyNum = 0;					//当前正在忙的线程
-	size_t m_waitExitNum = 0;			//需要推出的线程数量
+	size_t m_waitExitNum = 0;			//需要退出的线程数量
 	size_t m_workerId = 0;				//记录该工作线程是第几个
 	size_t m_maxQueSize = 0;			//任务队列的最大值
 	size_t m_liveNum = 0;					//存活的工作线程的数量
