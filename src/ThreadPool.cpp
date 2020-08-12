@@ -82,7 +82,10 @@ void ThreadPool::worker_thread()
     } // pick out task
     task = m_taskQueue.front();
     m_taskQueue.pop();
-    m_CSemaNotFull.notify();
+    if (m_taskQueue.size() == m_maxQueSize - 1)
+    {
+      m_CSemaNotFull.notify();
+    }
     m_mutex.unlock();
 
     {
@@ -219,7 +222,10 @@ bool ThreadPool::threadpool_add(void*(*function)(void *arg), void *arg)
     }
   }
   m_taskQueue.push(task);
-  m_CSemaNotEmpty.notify();
+  if (m_taskQueue.size() == 1)
+  {
+    m_CSemaNotEmpty.notify();
+  }
   m_mutex.unlock();
 
   return true;
